@@ -10,7 +10,7 @@ RUN dotnet restore Lab04.Api/Lab04.Api.csproj
 
 COPY . .
 
-WORKDIR /src/Lab04.Api
+WORKDIR /src/Lab04.Api 
 
 RUN dotnet publish -c Release -o /app/publish
 
