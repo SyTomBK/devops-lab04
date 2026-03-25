@@ -10,8 +10,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                echo 'Pull source code...'
-                checkout scm
+                git branch: 'main', url: 'https://github.com/SyTomBK/devops-lab04.git'
             }
         }
 
