@@ -8,6 +8,13 @@ pipeline {
 
     stages {
 
+        stage('Debug') {
+            steps {
+                sh 'pwd'
+                sh 'ls -la'
+            }
+        }
+
         stage('Checkout Code') {
             steps {
                 git branch: 'main', url: 'https://github.com/SyTomBK/devops-lab04.git'
