@@ -8,6 +8,18 @@ pipeline {
 
     stages {
 
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Debug') {
             steps {
                 sh 'pwd'
@@ -15,15 +27,8 @@ pipeline {
             }
         }
 
-        stage('Checkout Code') {
-            steps {
-                git branch: 'main', url: 'https://github.com/SyTomBK/devops-lab04.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
-                echo 'Building Docker image...'
                 sh """
                 docker build -t ${IMAGE_NAME}:${IMAGE_TAG} -f Lab04.Api/Dockerfile .
                 """
@@ -32,31 +37,17 @@ pipeline {
 
         stage('Run Container') {
             steps {
-                echo 'Stop old container if exists...'
                 sh """
                 docker rm -f lab04-container || true
-                """
-
-                echo 'Run new container...'
-                sh """
                 docker run -d --name lab04-container -p 8080:8080 ${IMAGE_NAME}:${IMAGE_TAG}
                 """
             }
         }
-
     }
 
     post {
         always {
             echo 'Pipeline finished.'
-        }
-
-        success {
-            echo 'Build SUCCESS'
-        }
-
-        failure {
-            echo 'Build FAILED'
         }
     }
 }
