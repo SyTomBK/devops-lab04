@@ -39,7 +39,7 @@ pipeline {
             steps {
                 sh """
                 docker rm -f lab04-container || true
-                docker run -d --name lab04-container -p 8080:8080 ${IMAGE_NAME}:${IMAGE_TAG}
+                docker run -d --name lab04-container -p 5000:8080 ${IMAGE_NAME}:${IMAGE_TAG}
                 """
             }
         }
